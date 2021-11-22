@@ -1,0 +1,14 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /api
+
+spring:
+#  jackson:
+#    serialization:
+#      FAIL_ON_EMPTY_BEANS: false
+  datasource:
+    url: jdbc:postgresql://javafs-210907-rds.cd8dnm0s2nue.us-east-2.rds.amazonaws.com:5432/postgres
+    username: postgres
+    password: .ColonyWars.
+    driver-class-name: org.postgresql.Driver
