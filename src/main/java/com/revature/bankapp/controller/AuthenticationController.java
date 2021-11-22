@@ -13,15 +13,13 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "auth")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthenticationController {
     @Autowired
     @Setter
@@ -31,7 +29,7 @@ public class AuthenticationController {
     @Setter
     private AuthenticationService authenticationService;
 
-    @PostMapping(path = "login", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "login", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> attemptUserLogin(@RequestBody User user) {
         try {
 
@@ -42,14 +40,14 @@ public class AuthenticationController {
                 if (user.getPassword().equals(dbUser.getPassword())) {
                     String userJson = mapper.writeValueAsString(dbUser);
                     String jwt = authenticationService.generateJWT(userJson);
-                    return new ResponseEntity<>("{token: '" + jwt + "'}", HttpStatus.OK);
+                    return new ResponseEntity<>("{\"token\": \"" + jwt + "\"}", HttpStatus.OK);
                 }
             }
 
-            return new ResponseEntity<>("{message: \"Invalid Credentials\"}", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("{\"message\": \"Invalid Credentials\"}", HttpStatus.UNAUTHORIZED);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            return new ResponseEntity<>("{message: \"An server-side error has occurred.\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("{\"message\": \"Annnn server-side error has occurred.\"}", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
