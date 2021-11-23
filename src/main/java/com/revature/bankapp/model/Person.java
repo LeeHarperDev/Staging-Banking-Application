@@ -1,5 +1,6 @@
 package com.revature.bankapp.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,9 @@ public class Person {
     private String fname;
     private String lname;
     private char minitial;
-    private String SSN;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String ssn;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
