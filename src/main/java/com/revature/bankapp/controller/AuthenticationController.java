@@ -37,10 +37,10 @@ public class AuthenticationController {
             List<User> users = userRepository.findAll();
 
             for (User dbUser : users) {
-                if (user.getPassword().equals(dbUser.getPassword())) {
+                if (dbUser.comparePassword(user.getPassword())) {
                     String userJson = mapper.writeValueAsString(dbUser);
                     String jwt = authenticationService.generateJWT(userJson);
-                    return new ResponseEntity<>("{\"token\": \"" + jwt + "\"}", HttpStatus.OK);
+                    return new ResponseEntity<>("{\"token\": \"" + jwt + "\", \"user\": " + userJson + "}", HttpStatus.OK);
                 }
             }
 
