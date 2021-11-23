@@ -1,11 +1,15 @@
 package com.revature.bankapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Table(name = "\"user\"")
 @Entity
@@ -17,6 +21,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -26,7 +32,12 @@ public class User {
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "person_id")
     private Person person;
+
     private String email;
 
-    private Date date_created;
+    private Date dateCreated;
+
+    public boolean comparePassword(String password) {
+        return this.password.equals(password);
+    }
 }
