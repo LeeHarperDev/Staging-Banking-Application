@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Table(name = "transactions")
 @Entity
@@ -23,5 +24,5 @@ public class Transaction {
     @JoinColumn(name = "account_id")
     private Account account;
     private double amount;
-    private LocalDateTime date_created;
+    private Date date_created;
 }
