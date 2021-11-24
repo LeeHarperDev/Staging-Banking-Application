@@ -28,18 +28,4 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     private List<Transaction> transactions;
-
-    public Integer getBalance() {
-        if (this.transactions != null) {
-            int sum = 0;
-
-            for (Transaction transaction : this.transactions) {
-                sum += transaction.getAmount();
-            }
-
-            return sum;
-        } else {
-            return 0;
-        }
-    }
 }
