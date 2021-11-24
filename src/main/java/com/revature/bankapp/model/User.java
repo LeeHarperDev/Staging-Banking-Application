@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Table(name = "\"user\"")
@@ -36,6 +37,10 @@ public class User {
     private String email;
 
     private Date dateCreated;
+
+    @OneToMany(mappedBy = "owner")
+    @JsonIgnore
+    private List<Account> accounts;
 
     public boolean comparePassword(String password) {
         return this.password.equals(password);
